@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎨 Suanluang Street Art Phase 2 | สวนหลวงสตรีทอาร์ต</title>
+    <meta name="description" content="งานสตรีทอาร์ตสุดยิ่งใหญ่ ศิลปินกว่า 15 คน พ่นสีสเปรย์ริมคลองพระโขนง 23-24 สิงหาคม 2568">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;800&family=Bebas+Neue&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        * {
+            font-family: 'Kanit', sans-serif;
+        }
+        
+        .bebas {
+            font-family: 'Bebas Neue', cursive;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 0.8s ease-out;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .bounce-animation {
+            animation: bounce 1s ease-in-out infinite;
+        }
+        
+        .graffiti-text {
+            text-shadow: 3px 3px 0px #000, 
+                        -1px -1px 0px #000,  
+                        1px -1px 0px #000,
+                        -1px 1px 0px #000,
+                        1px 1px 0px #000;
+        }
+        
+        .neon-glow {
+            text-shadow: 0 0 10px rgba(255,255,255,0.8),
+                        0 0 20px rgba(255,255,255,0.6),
+                        0 0 30px rgba(255,255,255,0.4);
+        }
+        
+        /* Dark mode styles */
+        .dark {
+            background-color: #0f0f0f;
+            color: #ffffff;
+        }
+        
+        .dark .card-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        /* Spray paint effect */
+        .spray-paint {
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cfilter id='spray'%3E%3CfeTurbulence baseFrequency='0.9' numOctaves='4' /%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/%3E%3C/filter%3E%3C/defs%3E%3Crect width='100' height='100' filter='url(%23spray)' opacity='0.1'/%3E%3C/svg%3E");
+        }
+        
+        /* Responsive image */
+        .hero-image {
+            max-height: 500px;
+            object-fit: cover;
+        }
+        
+        @media (max-width: 640px) {
+            .hero-image {
+                max-height: 300px;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen transition-all duration-500">
+    <!-- Dark Mode Toggle -->
+    <div class="fixed top-4 right-4 z-50">
+        <button id="darkModeToggle" class="bg-white dark:bg-gray-800 p-3 rounded-full shadow-lg hover:scale-110 transition-transform">
+            <i class="fas fa-moon text-gray-800 dark:text-yellow-400"></i>
+        </button>
+    </div>
+    
+    <!-- Hero Section -->
+    <section class="gradient-bg min-h-screen flex items-center justify-center p-4">
+        <div class="container mx-auto">
+            <div class="text-center text-white">
+                <h1 class="bebas text-5xl md:text-8xl graffiti-text mb-4 slide-in-left">
+                    SUANLUANG STREET ART
+                </h1>
+                <h2 class="text-2xl md:text-4xl font-bold mb-2 slide-in-right neon-glow">
+                    เฟส 2
+                </h2>
+                <div class="flex justify-center space-x-4 mb-8">
+                    <span class="text-xl md:text-2xl float-animation">🎨</span>
+                    <span class="text-xl md:text-2xl float-animation" style="animation-delay: 0.5s">✨</span>
+                    <span class="text-xl md:text-2xl float-animation" style="animation-delay: 1s">🎨</span>
+                </div>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8 px-4">
+                    สัมผัสผลงานพ่นสีสเปรย์จากศิลปินสตรีทอาร์ตกว่า 15 คน
+                    <br>ที่จะเนรมิตผนังริมคลองพระโขนงให้กลายเป็นแกลเลอรีกลางแจ้งสุดเท่!
+                </p>
+                <div class="bounce-animation">
+                    <i class="fas fa-chevron-down text-4xl"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <section class="py-16 px-4 bg-gray-100 dark:bg-gray-900 spray-paint">
+        <div class="container mx-auto">
+            <!-- Event Image -->
+            <div class="mb-12 rounded-lg overflow-hidden shadow-2xl">
+                <img src="https://lh5.googleusercontent.com/d/149qfZMlpzS8b0iVlJ7h0yRmLl9xX6ukD" 
+                     alt="Suanluang Street Art Event" 
+                     class="w-full hero-image hover:scale-105 transition-transform duration-500">
+            </div>
+            
+            <!-- Concept Card -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 mb-12 transform hover:scale-105 transition-all duration-300">
+                <h3 class="text-3xl font-bold mb-6 text-center bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                    💭 คอนเซปต์งาน
+                </h3>
+                <div class="bg-gradient-to-r from-purple-100 to-pink-100 dark:from-purple-900 dark:to-pink-900 p-6 rounded-lg">
+                    <p class="text-lg text-gray-800 dark:text-gray-200 text-center italic">
+                        "เรื่องราวของสวนหลวง – อดีต ปัจจุบัน อนาคต<br>
+                        การอยู่ร่วมกันของชุมชนไทย พุทธ มุสลิม"
+                    </p>
+                </div>
+                <p class="mt-4 text-gray-600 dark:text-gray-400 text-center">
+                    บอกเล่าเรื่องราวผ่านมุมมองและจินตนาการของศิลปิน ถ่ายทอดบนกำแพงริมคลองฝั่งตรงข้ามวัดขจรศิริ
+                </p>
+            </div>
+            
+            <!-- Event Details Grid -->
+            <div class="grid md:grid-cols-3 gap-6 mb-12">
+                <!-- Date Card -->
+                <div class="bg-gradient-to-br from-orange-400 to-red-500 text-white rounded-lg p-6 shadow-lg transform hover:scale-105 transition-all">
+                    <div class="text-center">
+                        <i class="fas fa-calendar-days text-4xl mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">วันที่จัดงาน</h4>
+                        <p class="text-2xl font-bold">23-24</p>
+                        <p class="text-lg">สิงหาคม 2568</p>
+                    </div>
+                </div>
+                
+                <!-- Time Card -->
+                <div class="bg-gradient-to-br from-blue-400 to-purple-500 text-white rounded-lg p-6 shadow-lg transform hover:scale-105 transition-all">
+                    <div class="text-center">
+                        <i class="fas fa-clock text-4xl mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">เวลา</h4>
+                        <p class="text-2xl font-bold">09:00 - 17:00</p>
+                        <p class="text-lg">ทั้ง 2 วัน</p>
+                    </div>
+                </div>
+                
+                <!-- Location Card -->
+                <div class="bg-gradient-to-br from-green-400 to-teal-500 text-white rounded-lg p-6 shadow-lg transform hover:scale-105 transition-all">
+                    <div class="text-center">
+                        <i class="fas fa-location-dot text-4xl mb-4"></i>
+                        <h4 class="text-xl font-bold mb-2">สถานที่</h4>
+                        <p class="text-sm">กำแพงโครงการบ้านกลางเมือง</p>
+                        <p class="text-sm">เดอะรอยัล โมนาโค</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CTA Buttons -->
+            <div class="flex flex-col md:flex-row gap-4 justify-center items-center mb-12">
+                <a href="https://maps.app.goo.gl/X3qinQ6ujsUNSPDX8" 
+                   target="_blank"
+                   class="bg-gradient-to-r from-purple-600 to-pink-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-110 transition-all shadow-lg flex items-center gap-2">
+                    <i class="fas fa-map-marked-alt"></i>
+                    ดูแผนที่
+                </a>
+                
+                <button onclick="shareEvent()" 
+                        class="bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-110 transition-all shadow-lg flex items-center gap-2">
+                    <i class="fas fa-share-nodes"></i>
+                    แชร์กิจกรรม
+                </button>
+                
+                <a href="https://drive.google.com/file/d/149qfZMlpzS8b0iVlJ7h0yRmLl9xX6ukD/view" 
+                   target="_blank"
+                   class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-110 transition-all shadow-lg flex items-center gap-2">
+                    <i class="fas fa-image"></i>
+                    ดูภาพประกอบ
+                </a>
+            </div>
+            
+            <!-- Artists Section -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-8 mb-12">
+                <h3 class="text-3xl font-bold mb-6 text-center">
+                    <span class="bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text text-transparent">
+                        🎨 ศิลปินร่วมงาน
+                    </span>
+                </h3>
+                <div class="flex justify-center items-center">
+                    <div class="text-center">
+                        <p class="text-6xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent mb-2">15+</p>
+                        <p class="text-lg text-gray-600 dark:text-gray-400">ศิลปินสตรีทอาร์ตมืออาชีพ</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Hashtags -->
+            <div class="text-center">
+                <div class="flex flex-wrap justify-center gap-2">
+                    <span class="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full text-sm font-semibold pulse-animation">
+                        #SuanluangStreetArt
+                    </span>
+                    <span class="bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-semibold pulse-animation" style="animation-delay: 0.5s">
+                        #สวนหลวงสตรีทอาร์ต
+                    </span>
+                    <span class="bg-gradient-to-r from-green-500 to-teal-500 text-white px-4 py-2 rounded-full text-sm font-semibold pulse-animation" style="animation-delay: 1s">
+                        #StreetArt
+                    </span>
+                    <span class="bg-gradient-to-r from-orange-500 to-red-500 text-white px-4 py-2 rounded-full text-sm font-semibold pulse-animation" style="animation-delay: 1.5s">
+                        #Graffiti
+                    </span>
+                    <span class="bg-gradient-to-r from-indigo-500 to-purple-500 text-white px-4 py-2 rounded-full text-sm font-semibold pulse-animation" style="animation-delay: 2s">
+                        #สองวัฒนธรรม
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8 px-4">
+        <div class="container mx-auto text-center">
+            <p class="mb-4">จัดโดย: สำนักงานเขตสวนหลวง กรุงเทพมหานคร</p>
+            <div class="flex justify-center space-x-4">
+                <a href="#" class="hover:text-purple-400 transition-colors">
+                    <i class="fab fa-facebook text-2xl"></i>
+                </a>
+                <a href="#" class="hover:text-purple-400 transition-colors">
+                    <i class="fab fa-instagram text-2xl"></i>
+                </a>
+                <a href="#" class="hover:text-purple-400 transition-colors">
+                    <i class="fab fa-twitter text-2xl"></i>
+                </a>
+            </div>
+            <p class="mt-4 text-sm text-gray-400">© 2568 Suanluang Street Art. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- Floating Action Button -->
+    <div class="fixed bottom-8 right-8 z-40">
+        <button onclick="scrollToTop()" class="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-full shadow-lg hover:scale-110 transition-all">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const body = document.body;
+        const icon = darkModeToggle.querySelector('i');
+        
+        // Check for saved theme preference
+        if (localStorage.getItem('theme') === 'dark') {
+            body.classList.add('dark');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+        
+        darkModeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            
+            if (body.classList.contains('dark')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+        
+        // Scroll to top
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+        
+        // Share event
+        function shareEvent() {
+            const shareData = {
+                title: 'Suanluang Street Art Phase 2',
+                text: '🎨 มาร่วมชมผลงานสตรีทอาร์ตจากศิลปินกว่า 15 คน ที่ริมคลองพระโขนง วันที่ 23-24 สิงหาคม 2568',
+                url: window.location.href
+            };
+            
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => console.log('Shared successfully'))
+                    .catch((error) => console.log('Error sharing:', error));
+            } else {
+                // Fallback - copy to clipboard
+                const text = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
+                navigator.clipboard.writeText(text).then(() => {
+                    alert('ลิงก์ได้ถูกคัดลอกแล้ว!');
+                });
+            }
+        }
+        
+        // Smooth scroll reveal animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe all cards
+        document.querySelectorAll('.container > div').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+        
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.gradient-bg');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+        
+        // Add ripple effect to buttons
+        document.querySelectorAll('button, a').forEach(elem => {
+            elem.addEventListener('click', function(e) {
+                const ripple = document.createElement('span');
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.classList.add('ripple');
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
+        
+        // Add CSS for ripple effect
+        const style = document.createElement('style');
+        style.textContent = `
+            .ripple {
+                position: absolute;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                transform: scale(0);
+                animation: ripple-animation 0.6s ease-out;
+                pointer-events: none;
+            }
+            
+            @keyframes ripple-animation {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+            
+            button, a {
+                position: relative;
+                overflow: hidden;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
