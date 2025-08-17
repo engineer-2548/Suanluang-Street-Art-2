@@ -139,6 +139,47 @@
                 max-height: 300px;
             }
         }
+        
+        /* Modal animation */
+        #shareModal {
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        #shareModal > div {
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            to { 
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        /* Toast animation */
+        #toast {
+            animation: slideInUp 0.3s ease-out;
+        }
+        
+        @keyframes slideInUp {
+            from { 
+                transform: translate(-50%, 20px);
+                opacity: 0;
+            }
+            to { 
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body class="min-h-screen transition-all duration-500">
@@ -248,13 +289,35 @@
                     <i class="fas fa-share-nodes"></i>
                     แชร์กิจกรรม
                 </button>
-                
-                <a href="https://drive.google.com/file/d/149qfZMlpzS8b0iVlJ7h0yRmLl9xX6ukD/view" 
-                   target="_blank"
-                   class="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:scale-110 transition-all shadow-lg flex items-center gap-2">
-                    <i class="fas fa-image"></i>
-                    ดูภาพประกอบ
-                </a>
+            </div>
+            
+            <!-- Share Modal -->
+            <div id="shareModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full">
+                    <h3 class="text-xl font-bold mb-4">แชร์กิจกรรม</h3>
+                    <div class="space-y-3">
+                        <button onclick="shareToFacebook()" class="w-full bg-blue-600 text-white py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-blue-700">
+                            <i class="fab fa-facebook"></i> Facebook
+                        </button>
+                        <button onclick="shareToLine()" class="w-full bg-green-500 text-white py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-green-600">
+                            <i class="fab fa-line"></i> LINE
+                        </button>
+                        <button onclick="shareToTwitter()" class="w-full bg-black text-white py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-800">
+                            <i class="fab fa-x-twitter"></i> X (Twitter)
+                        </button>
+                        <button onclick="copyLink()" class="w-full bg-gray-600 text-white py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-gray-700">
+                            <i class="fas fa-link"></i> คัดลอกลิงก์
+                        </button>
+                    </div>
+                    <button onclick="closeShareModal()" class="mt-4 w-full py-2 text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-200">
+                        ปิด
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Toast Notification -->
+            <div id="toast" class="hidden fixed bottom-24 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white px-6 py-3 rounded-full shadow-lg z-50">
+                <span id="toastMessage">คัดลอกลิงก์แล้ว!</span>
             </div>
             
             <!-- Artists Section -->
@@ -300,15 +363,15 @@
         <div class="container mx-auto text-center">
             <p class="mb-4">จัดโดย: สำนักงานเขตสวนหลวง กรุงเทพมหานคร</p>
             <div class="flex justify-center space-x-4">
-                <a href="#" class="hover:text-purple-400 transition-colors">
+                <button onclick="shareToFacebook()" class="hover:text-purple-400 transition-colors">
                     <i class="fab fa-facebook text-2xl"></i>
-                </a>
-                <a href="#" class="hover:text-purple-400 transition-colors">
-                    <i class="fab fa-instagram text-2xl"></i>
-                </a>
-                <a href="#" class="hover:text-purple-400 transition-colors">
-                    <i class="fab fa-twitter text-2xl"></i>
-                </a>
+                </button>
+                <button onclick="shareToLine()" class="hover:text-purple-400 transition-colors">
+                    <i class="fab fa-line text-2xl"></i>
+                </button>
+                <button onclick="shareToTwitter()" class="hover:text-purple-400 transition-colors">
+                    <i class="fab fa-x-twitter text-2xl"></i>
+                </button>
             </div>
             <p class="mt-4 text-sm text-gray-400">© 2568 Suanluang Street Art. All rights reserved.</p>
         </div>
@@ -365,18 +428,100 @@
                 url: window.location.href
             };
             
-            if (navigator.share) {
+            // Check if Web Share API is available and works (usually on mobile)
+            if (navigator.share && /Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
                 navigator.share(shareData)
                     .then(() => console.log('Shared successfully'))
-                    .catch((error) => console.log('Error sharing:', error));
+                    .catch((error) => {
+                        // If share fails, show modal
+                        if (error.name !== 'AbortError') {
+                            showShareModal();
+                        }
+                    });
             } else {
-                // Fallback - copy to clipboard
-                const text = `${shareData.title}\n${shareData.text}\n${shareData.url}`;
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('ลิงก์ได้ถูกคัดลอกแล้ว!');
-                });
+                // Show custom share modal for desktop and unsupported devices
+                showShareModal();
             }
         }
+        
+        // Show share modal
+        function showShareModal() {
+            document.getElementById('shareModal').classList.remove('hidden');
+        }
+        
+        // Close share modal
+        function closeShareModal() {
+            document.getElementById('shareModal').classList.add('hidden');
+        }
+        
+        // Share to Facebook
+        function shareToFacebook() {
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank');
+            closeShareModal();
+        }
+        
+        // Share to LINE
+        function shareToLine() {
+            const text = encodeURIComponent('🎨 Suanluang Street Art Phase 2\nมาร่วมชมผลงานสตรีทอาร์ตจากศิลปินกว่า 15 คน\n📅 23-24 สิงหาคม 2568\n📍 ริมคลองพระโขนง\n' + window.location.href);
+            window.open(`https://line.me/R/msg/text/?${text}`, '_blank');
+            closeShareModal();
+        }
+        
+        // Share to Twitter
+        function shareToTwitter() {
+            const text = encodeURIComponent('🎨 Suanluang Street Art Phase 2 - มาร่วมชมผลงานสตรีทอาร์ต 23-24 สิงหาคม 2568 #SuanluangStreetArt');
+            const url = encodeURIComponent(window.location.href);
+            window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank');
+            closeShareModal();
+        }
+        
+        // Copy link to clipboard
+        function copyLink() {
+            const text = `🎨 Suanluang Street Art Phase 2\nมาร่วมชมผลงานสตรีทอาร์ตจากศิลปินกว่า 15 คน\n📅 23-24 สิงหาคม 2568\n📍 ริมคลองพระโขนง\n${window.location.href}`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('คัดลอกลิงก์แล้ว!');
+                closeShareModal();
+            }).catch(() => {
+                // Fallback for older browsers
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                textarea.style.position = 'fixed';
+                textarea.style.opacity = '0';
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast('คัดลอกลิงก์แล้ว!');
+                closeShareModal();
+            });
+        }
+        
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            toastMessage.textContent = message;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('shareModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareModal();
+            }
+        });
+        
+        // Close modal with ESC key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeShareModal();
+            }
+        });
         
         // Smooth scroll reveal animation
         const observerOptions = {
